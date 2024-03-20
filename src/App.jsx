@@ -25,20 +25,26 @@ function App() {
 			<div className="grid grid-cols-8">
 				<div className="col-span-3 prose">
 					<h2>Menu Categories</h2>
-					<ul>
-						{categories.map((category) => (
-							<li key={category.id} className="my-0">
-								<a
-									className="link link-hover"
-									onClick={() =>
-										handleCategoryClick(category.short_name)
-									}
-								>
-									{category.name} - ({category.short_name})
-								</a>
-							</li>
-						))}
-					</ul>
+					{categories.length === 0 && <p>Loading...</p>}
+					{categories.length !== 0 && (
+						<ul>
+							{categories.map((category) => (
+								<li key={category.id} className="my-0">
+									<a
+										className="link link-hover"
+										onClick={() =>
+											handleCategoryClick(
+												category.short_name
+											)
+										}
+									>
+										{category.name} - ({category.short_name}
+										)
+									</a>
+								</li>
+							))}
+						</ul>
+					)}
 				</div>
 
 				{menu.length !== 0 && (

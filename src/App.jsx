@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import CategoriesList from "./components/CategoriesList";
+import MenuItemsList from "./components/MenuItemsList";
 
 function App() {
 	const baseURL = "https://stream-restaurant-menu-svc.herokuapp.com/";
@@ -21,53 +23,18 @@ function App() {
 	}, []);
 
 	return (
-		<div className="p-4">
-			<div className="grid grid-cols-8">
-				<div className="col-span-3 prose">
-					<h2>Menu Categories</h2>
-					{categories.length === 0 && <p>Loading...</p>}
-					{categories.length !== 0 && (
-						<ul>
-							{categories.map((category) => (
-								<li key={category.id} className="my-0">
-									<a
-										className="link link-hover"
-										onClick={() =>
-											handleCategoryClick(
-												category.short_name
-											)
-										}
-									>
-										{category.name} - ({category.short_name}
-										)
-									</a>
-								</li>
-							))}
-						</ul>
+		<div className="container mx-auto">
+			<div className="p-4">
+				<div className="grid grid-cols-8">
+					<CategoriesList
+						categories={categories}
+						handleCategoryClick={handleCategoryClick}
+					/>
+
+					{menu.length !== 0 && (
+						<MenuItemsList shortName={shortName} menu={menu} />
 					)}
 				</div>
-
-				{menu.length !== 0 && (
-					<div className="col-span-5 prose">
-						<h3>Items in Category: ({shortName})</h3>
-						<table className="table">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Description</th>
-								</tr>
-							</thead>
-							<tbody>
-								{menu.map((item) => (
-									<tr key={item.id}>
-										<td>{item.name}</td>
-										<td>{item.description}</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				)}
 			</div>
 		</div>
 	);

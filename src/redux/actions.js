@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const fetchCategories = () => (dispatch) => {
+/* export const fetchCategories = () => (dispatch) => {
 	return axios
 		.get("https://stream-restaurant-menu-svc.herokuapp.com/category")
 		.then((response) => dispatch(setCategories(response.data)))
@@ -17,11 +17,22 @@ export const fetchMenuItems = (short_name) => (dispatch) => {
 			dispatch(setShortName(short_name));
 		})
 		.catch((error) => console.error("Fetching menu items failed: ", error));
-};
+}; */
+
+// Category actions
+export const fetchCategories = () => ({
+	type: "FETCH_CATEGORIES",
+});
 
 export const setCategories = (categories) => ({
 	type: "SET_CATEGORIES",
 	payload: categories,
+});
+
+// Menu actions
+export const fetchMenuItems = (shortName) => ({
+	type: "FETCH_MENU_ITEMS",
+	payload: shortName,
 });
 
 export const setMenu = (menu) => ({

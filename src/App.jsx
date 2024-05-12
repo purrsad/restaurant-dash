@@ -1,26 +1,22 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CategoriesList from "./components/CategoriesList";
 import MenuItemsList from "./components/MenuItemsList";
+import { fetchCategories, fetchMenuItems } from "./redux/actions";
 
 function App() {
-	const baseURL = "https://stream-restaurant-menu-svc.herokuapp.com/";
-	const [categories, setCategories] = useState([]);
-	const [menu, setMenu] = useState([]);
-	const [shortName, setShortName] = useState("");
-
-	const handleCategoryClick = (short_name) => {
-		axios.get(baseURL + "/item?category=" + short_name).then((res) => {
-			setMenu(res.data);
-			setShortName(short_name);
-		});
-	};
+	const categories = useSelector((state) => state.categories.categories);
+	const menu = useSelector((state) => state.menu.menu);
+	const shortName = useSelector((state) => state.menu.shortName);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		axios.get(baseURL + "category").then((res) => {
-			setCategories(res.data);
-		});
-	}, []);
+		dispatch(fetchCategories());
+	}, [dispatch]);
+
+	const handleCategoryClick = (short_name) => {
+		dispatch(fetchMenuItems(short_name));
+	};
 
 	return (
 		<div className="container mx-auto">
